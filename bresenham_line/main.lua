@@ -93,7 +93,7 @@ function love.mousepressed(x, y, button, istouch)
 		CLICK_COUNT = CLICK_COUNT + 1
 
 		if CLICK_COUNT == 2 then
-			bresenham(Map, LINE_BUFFER[1], LINE_BUFFER[2], LINE_BUFFER[3], LINE_BUFFER[4], 1)
+			bresenham(Map, LINE_BUFFER[1], LINE_BUFFER[2], LINE_BUFFER[3], LINE_BUFFER[4])
 			CLICK_COUNT = 0
 			LINE_BUFFER = {}
 		end
