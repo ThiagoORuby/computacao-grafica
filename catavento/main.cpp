@@ -4,6 +4,7 @@
 #include <iostream>
 using namespace std;
 
+// Constantes
 GLsizei winWidth = 600, winHeight = 400;
 GLfloat ANGLE = 0;
 GLfloat SPEED = 0.01;
@@ -24,12 +25,7 @@ void displayRet(void) {
   // limpa o display
   glClear(GL_COLOR_BUFFER_BIT);
 
-  // Desenha Triangulo
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
-  glColor3f(1.0, 0.0, 0.0);
-  glPointSize(10.0);
-
+  // Desenha Cabo
   glColor3f(1.0, 1.0, .0);
   glBegin(GL_POLYGON);
   glVertex3f(249.0f, 250.0f, -1.0f);
@@ -38,6 +34,7 @@ void displayRet(void) {
   glVertex3f(251.0f, 100.0f, -1.0f);
   glEnd();
 
+  // Aplica rotação nos triângulos em torno do ponto central
   glPushMatrix();
   glTranslatef(250, 250, 0);
   glRotatef(ANGLE, 0.0, 0.0, 1.0);
@@ -75,17 +72,22 @@ void displayRet(void) {
   glVertex2f(200.0f, 230.0f);
   glEnd();
 
+  glPopMatrix();
+
   // executa os comandos
   glFlush();
 }
 
 void rotateTriangle() {
+  /* Altera o ângulo de rotação dos triângulos
+   * com base na velocidade e na direção do movimento
+   * */
   ANGLE += SPEED * DIRECTION;
   glutPostRedisplay();
 }
 
 void catchKey(unsigned char key, int x, int y) {
-
+  // Mapeia teclas normais
   switch (key) {
   case 'q':
     exit(0);
@@ -100,6 +102,7 @@ void catchKey(unsigned char key, int x, int y) {
 }
 
 void catchSpecialKey(int key, int x, int y) {
+  // Mapeia teclas especiais
   if (key == GLUT_KEY_LEFT) {
     DIRECTION = 1;
   }
@@ -134,7 +137,9 @@ int main(int argc, char *argv[]) {
   glutReshapeFunc(reshape);
   /* Callback para para interagir com teclado */
   glutKeyboardFunc(catchKey);
+  /* Callback para interagir com teclas especiais */
   glutSpecialFunc(catchSpecialKey);
+  /* Callback para animação (idle) */
   glutIdleFunc(rotateTriangle);
   /* inicia o processamento dos eventos... */
   glutMainLoop();
